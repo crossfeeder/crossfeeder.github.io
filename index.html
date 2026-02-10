@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrossFeeder Agneindeley Bilé — DJ sans frontières</title>
+<meta name="description" content="CrossFeeder Agneindeley Bilé — DJ sans frontières. House, French Touch, Afro House, Hip Hop, Électro, Jazz.">
+<meta property="og:title" content="CrossFeeder Agneindeley Bilé">
+<meta property="og:description" content="DJ sans frontières — House · French Touch · Afro House · Hip Hop · Électro · Jazz">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #111110;
+    --bg-card: #1c1b19;
+    --bg-card-hover: #252420;
+    --accent: #D97706;
+    --accent-light: #F59E0B;
+    --accent-dark: #92400E;
+    --cream: #FEF3C7;
+    --cream-dim: rgba(254, 243, 199, 0.55);
+    --border: rgba(217, 119, 6, 0.12);
+    --border-hover: rgba(217, 119, 6, 0.4);
+    --glow: rgba(217, 119, 6, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== TEXTURE & ATMOSPHERE ===== */
+  .noise {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .glow-top {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(ellipse, rgba(217, 119, 6, 0.07) 0%, rgba(146, 64, 14, 0.03) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow-bottom {
+    position: fixed;
+    bottom: -300px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(146, 64, 14, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== CONTAINER ===== */
+  .page {
+    width: 100%;
+    max-width: 480px;
+    padding: 48px 24px 64px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== LOGO ===== */
+  .logo-wrap {
+    text-align: center;
+    margin-bottom: 8px;
+    animation: fadeDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .logo-mark {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .logo-mark svg { width: 100%; height: 100%; }
+
+  .logo-ring {
+    animation: rotateSlow 40s linear infinite;
+    transform-origin: center;
+  }
+
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  }
+
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .header .sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.45em;
+    color: var(--cream-dim);
+    margin-bottom: 20px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--cream-dim);
+    background: rgba(217, 119, 6, 0.04);
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover {
+    border-color: var(--border-hover);
+    color: var(--accent-light);
+    background: rgba(217, 119, 6, 0.08);
+  }
+
+  /* ===== BIO ===== */
+  .bio {
+    text-align: center;
+    margin-bottom: 44px;
+    animation: fadeDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  }
+
+  .bio p {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--cream-dim);
+    font-weight: 300;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .bio .highlight {
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0 20px;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .divider span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    opacity: 0.4;
+    white-space: nowrap;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+
+  /* ===== LINKS ===== */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--cream);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    border-radius: 0 2px 2px 0;
+    z-index: 2;
+  }
+
+  .link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(217, 119, 6, 0.06) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .link:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(217, 119, 6, 0.08), 0 0 0 1px rgba(217, 119, 6, 0.1);
+  }
+
+  .link:hover::before { transform: scaleY(1); }
+  .link:hover::after { opacity: 1; }
+
+  .link:active { transform: translateY(-1px); }
+
+  .link-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: rgba(217, 119, 6, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s ease;
+  }
+
+  .link:hover .link-icon {
+    background: rgba(217, 119, 6, 0.15);
+  }
+
+  .link-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--accent);
+    transition: fill 0.3s;
+  }
+
+  .link:hover .link-icon svg { fill: var(--accent-light); }
+
+  .link-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-title {
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+    letter-spacing: 0.01em;
+  }
+
+  .link-desc {
+    font-size: 0.7rem;
+    color: var(--cream-dim);
+    font-weight: 300;
+  }
+
+  .link-arrow {
+    position: relative;
+    z-index: 1;
+    opacity: 0.2;
+    transition: all 0.35s ease;
+    flex-shrink: 0;
+  }
+
+  .link:hover .link-arrow {
+    opacity: 0.7;
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  /* Staggered animations */
+  .link:nth-child(1) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+  .link:nth-child(2) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both; }
+  .link:nth-child(3) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.46s both; }
+  .link:nth-child(4) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.54s both; }
+  .link:nth-child(5) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.62s both; }
+  .link:nth-child(6) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.70s both; }
+
+  /* ===== AUDIO VISUALIZER (decorative) ===== */
+  .visualizer {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin: 36px 0 12px;
+    height: 28px;
+    align-items: flex-end;
+    animation: fadeUp 0.5s ease 0.8s both;
+  }
+
+  .bar {
+    width: 3px;
+    border-radius: 2px;
+    background: var(--accent);
+    opacity: 0.3;
+    animation: pulse var(--d, 1s) ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { height: var(--h1, 6px); opacity: 0.15; }
+    100% { height: var(--h2, 20px); opacity: 0.4; }
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    margin-top: 36px;
+    animation: fadeUp 0.5s ease 0.9s both;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .social {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .social:hover {
+    background: rgba(217, 119, 6, 0.1);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(217, 119, 6, 0.12);
+  }
+
+  .social svg {
+    width: 17px;
+    height: 17px;
+    fill: var(--cream-dim);
+    transition: all 0.3s;
+  }
+
+  .social:hover svg { fill: var(--accent); }
+
+  .copyright {
+    font-size: 0.6rem;
+    color: var(--cream-dim);
+    opacity: 0.3;
+    letter-spacing: 0.08em;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== PRESS KIT SECTION ===== */
+  .press-section {
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s ease 0.85s both;
+  }
+
+  .press-bio {
+    font-size: 0.78rem;
+    line-height: 1.85;
+    color: var(--cream-dim);
+    font-weight: 300;
+    text-align: justify;
+    margin-bottom: 24px;
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    position: relative;
+  }
+
+  .press-bio::before {
+    content: '"';
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 400px) {
+    .page { padding: 36px 16px 48px; }
+    .header h1 { font-size: 2.2rem; }
+    .tag { font-size: 0.6rem; padding: 4px 10px; }
+  }
+
+  /* ===== SCROLL SUBTLE ===== */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent-dark); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="glow-top"></div>
+<div class="glow-bottom"></div>
+
+<div class="page">
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <div class="logo-mark">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g class="logo-ring">
+          <circle cx="100" cy="100" r="92" fill="none" stroke="#D97706" stroke-width="1.5" opacity="0.2" stroke-dasharray="4 8"/>
+        </g>
+        <circle cx="100" cy="100" r="76" fill="none" stroke="#D97706" stroke-width="1" opacity="0.1"/>
+        
+        <!-- X motif -->
+        <line x1="62" y1="68" x2="138" y2="132" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+        <line x1="138" y1="68" x2="62" y2="132" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+        
+        <!-- Center -->
+        <circle cx="100" cy="100" r="7" fill="#D97706"/>
+        <circle cx="100" cy="100" r="3.5" fill="#111110"/>
+        
+        <!-- Frequency bars left -->
+        <rect x="36" y="89" width="2.5" height="22" rx="1.25" fill="#D97706" opacity="0.5"/>
+        <rect x="43" y="83" width="2.5" height="34" rx="1.25" fill="#D97706" opacity="0.4"/>
+        <rect x="50" y="79" width="2.5" height="42" rx="1.25" fill="#D97706" opacity="0.3"/>
+        
+        <!-- Frequency bars right -->
+        <rect x="148" y="79" width="2.5" height="42" rx="1.25" fill="#D97706" opacity="0.3"/>
+        <rect x="155" y="83" width="2.5" height="34" rx="1.25" fill="#D97706" opacity="0.4"/>
+        <rect x="162" y="89" width="2.5" height="22" rx="1.25" fill="#D97706" opacity="0.5"/>
+        
+        <!-- Arcs -->
+        <path d="M 68 50 A 50 50 0 0 1 132 50" fill="none" stroke="#F59E0B" stroke-width="1" opacity="0.2"/>
+        <path d="M 68 150 A 50 50 0 0 0 132 150" fill="none" stroke="#92400E" stroke-width="1" opacity="0.25"/>
+        
+        <!-- Dots -->
+        <circle cx="100" cy="26" r="2.5" fill="#D97706" opacity="0.3"/>
+        <circle cx="100" cy="174" r="2.5" fill="#D97706" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>CROSSFEEDER</h1>
+    <div class="sub">AGNEINDELEY BILÉ</div>
+    <div class="tags">
+      <span class="tag">House</span>
+      <span class="tag">French Touch</span>
+      <span class="tag">Afro House</span>
+      <span class="tag">Hip Hop</span>
+      <span class="tag">Électro</span>
+      <span class="tag">Jazz</span>
+    </div>
+  </div>
+
+  <!-- LISTEN -->
+  <div class="divider" style="animation-delay: 0.25s"><span>ÉCOUTER</span></div>
+
+  <div class="links">
+
+    <!-- SoundCloud -->
+    <a href="https://www.soundcloud.com/dj-cross-feeder" target="_blank" class="link">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M1.175 12.225c-.051 0-.094.046-.101.1l-.233 2.154.233 2.105c.007.058.05.098.101.098.05 0 .09-.04.099-.098l.255-2.105-.27-2.154c-.009-.06-.05-.1-.1-.1m-.899.828c-.06 0-.091.037-.104.094L0 14.479l.165 1.308c.014.055.045.094.104.094s.09-.038.104-.094l.21-1.308-.21-1.334c-.014-.055-.044-.09-.104-.09m1.848-1.6c-.071 0-.126.055-.131.12l-.21 2.873.21 2.783c.005.07.06.12.131.12.07 0 .125-.05.131-.12l.237-2.783-.237-2.873c-.006-.07-.061-.12-.131-.12m.862-.44c-.08 0-.138.06-.144.135l-.195 3.313.195 3.186c.006.077.065.135.144.135.08 0 .139-.058.144-.135l.217-3.186-.217-3.313c-.005-.075-.065-.135-.144-.135m.86-.27c-.092 0-.155.07-.16.155l-.18 3.583.18 3.318c.005.085.068.155.16.155.09 0 .153-.07.16-.155l.2-3.318-.2-3.583c-.007-.085-.07-.155-.16-.155m.882-.145c-.098 0-.171.08-.176.17l-.164 3.728.164 3.418c.005.092.078.17.176.17.096 0 .17-.078.176-.17l.185-3.418-.185-3.728c-.006-.09-.08-.17-.176-.17m.883-.12c-.11 0-.19.09-.194.19l-.15 3.848.15 3.483c.004.1.084.19.194.19.108 0 .189-.09.193-.19l.17-3.483-.17-3.848c-.004-.1-.085-.19-.193-.19m.888-.1c-.12 0-.204.098-.207.205l-.136 3.948.136 3.543c.003.11.088.205.207.205.118 0 .203-.095.207-.205l.15-3.543-.15-3.948c-.004-.107-.09-.205-.207-.205m.897-.063c-.13 0-.218.106-.22.22l-.12 4.01.12 3.588c.002.115.09.22.22.22.128 0 .217-.105.22-.22l.136-3.588-.136-4.01c-.003-.114-.092-.22-.22-.22m.89-.03c-.14 0-.233.115-.234.234l-.107 4.04.107 3.61c.001.12.094.234.234.234.14 0 .232-.114.234-.234l.12-3.61-.12-4.04c-.002-.12-.094-.234-.234-.234m.894-.012c-.15 0-.247.125-.247.25l-.093 4.052.093 3.603c0 .13.097.25.247.25.148 0 .246-.12.247-.25l.104-3.603-.104-4.052c-.001-.125-.099-.25-.247-.25m5.028.96c-.232 0-.449.032-.659.09C12.957 8.582 10.766 6.65 8.206 6.65c-.554 0-1.1.103-1.584.3-.182.074-.23.148-.23.293v10.1c0 .152.122.28.272.294h6.68c1.768 0 3.2-1.43 3.2-3.195S15.112 11.25 13.344 11.25"/></svg>
+      </div>
+      <div class="link-content">
+        <div class="link-title">SoundCloud</div>
+        <div class="link-desc">Écouter mes mixes</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+    <!-- Mixcloud -->
+    <a href="https://www.mixcloud.com/CrossFeeder/" target="_blank" class="link">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M6.344 9.5c.058 0 .098.048.098.108l-.003 4.784c0 .06-.04.108-.098.108H5.35c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06 0c.057 0 .097.048.097.108v4.784c0 .06-.04.108-.098.108H8.41c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06 1.25c.058 0 .098.048.098.108v2.284c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108v-2.284c0-.06.04-.108.098-.108h.994zm3.06-1.25c.058 0 .098.048.098.108v4.784c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06.5c.058 0 .098.048.098.108v3.784c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108v-3.784c0-.06.04-.108.098-.108h.994z"/></svg>
+      </div>
+      <div class="link-content">
+        <div class="link-title">Mixcloud</div>
+        <div class="link-desc">Sets complets & archives</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+  </div>
+
+  <!-- FOLLOW -->
+  <div class="divider" style="animation-delay: 0.45s"><span>SUIVRE</span></div>
+
+  <div class="links">
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/crossfeeder_music" target="_blank" class="link">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2zm-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+      </div>
+      <div class="link-content">
+        <div class="link-title">Instagram</div>
+        <div class="link-desc">Suivre CrossFeeder</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+  </div>
+
+  <!-- COLLAB -->
+  <div class="divider" style="animation-delay: 0.55s"><span>PROJET</span></div>
+
+  <div class="links">
+
+    <!-- Collab -->
+    <a href="#" class="link" style="opacity: 0.7; cursor: default;">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      </div>
+      <div class="link-content">
+        <div class="link-title">Soundspirit × Josh Monacor × CrossFeeder</div>
+        <div class="link-desc">Bientôt — Sets interconnectés</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+    <!-- Booking -->
+    <a href="mailto:crossfeeder.booking@gmail.com" class="link">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </div>
+      <div class="link-content">
+        <div class="link-title">Booking & Contact</div>
+        <div class="link-desc">crossfeeder.booking@gmail.com</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+  </div>
+
+  <!-- VISUALIZER -->
+  <div class="visualizer">
+    <div class="bar" style="--h1:4px;--h2:14px;--d:0.8s"></div>
+    <div class="bar" style="--h1:8px;--h2:22px;--d:0.6s"></div>
+    <div class="bar" style="--h1:5px;--h2:18px;--d:1.1s"></div>
+    <div class="bar" style="--h1:10px;--h2:26px;--d:0.5s"></div>
+    <div class="bar" style="--h1:6px;--h2:20px;--d:0.9s"></div>
+    <div class="bar" style="--h1:12px;--h2:28px;--d:0.45s"></div>
+    <div class="bar" style="--h1:7px;--h2:22px;--d:0.75s"></div>
+    <div class="bar" style="--h1:4px;--h2:16px;--d:1s"></div>
+    <div class="bar" style="--h1:9px;--h2:24px;--d:0.55s"></div>
+    <div class="bar" style="--h1:5px;--h2:12px;--d:0.85s"></div>
+    <div class="bar" style="--h1:11px;--h2:26px;--d:0.65s"></div>
+    <div class="bar" style="--h1:6px;--h2:18px;--d:0.95s"></div>
+    <div class="bar" style="--h1:3px;--h2:14px;--d:1.2s"></div>
+    <div class="bar" style="--h1:8px;--h2:20px;--d:0.7s"></div>
+    <div class="bar" style="--h1:5px;--h2:16px;--d:0.9s"></div>
+  </div>
+
+  <!-- BIO / PRESS -->
+  <div class="press-section">
+    <div class="divider" style="animation-delay: 0.75s"><span>BIO</span></div>
+    <div class="press-bio">
+      CrossFeeder incarne cette génération de DJs français dont la culture musicale dépasse les frontières d'un seul style. Musicien formé au conservatoire, il prend définitivement les platines en 2014 à Wuhan, Chine, où il mixe aux côtés de crews locaux dans les venues et nightclubs de la scène underground. Marqué aussi par les nuits de Tokyo, vécues de l'intérieur du dancefloor, il nourrit un éclectisme forgé entre toutes ces influences. Récemment passionné par l'art du mashup grâce aux stems, il construit des sets où la musicalité prime&nbsp;: house énergique, french touch groovy, afro house organique, hip hop old school percutant — sans jamais s'y enfermer, puisant aussi dans l'électro, le jazz ou les territoires sonores d'artistes comme Kaytranada, Jungle, Kiefer, Carpenter Brut ou Justice. À l'aise aussi bien sur platines que sur contrôleur, CrossFeeder crée des ponts harmonieux entre genres et époques. Actuellement en collaboration avec Soundspirit et Josh Monacor sur un concept novateur de sets interconnectés.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="socials">
+      <a href="https://www.instagram.com/crossfeeder_music" target="_blank" class="social" title="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2zm-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+      </a>
+      <a href="https://www.soundcloud.com/dj-cross-feeder" target="_blank" class="social" title="SoundCloud">
+        <svg viewBox="0 0 24 24"><path d="M1.175 12.225c-.051 0-.094.046-.101.1l-.233 2.154.233 2.105c.007.058.05.098.101.098.05 0 .09-.04.099-.098l.255-2.105-.27-2.154c-.009-.06-.05-.1-.1-.1m-.899.828c-.06 0-.091.037-.104.094L0 14.479l.165 1.308c.014.055.045.094.104.094s.09-.038.104-.094l.21-1.308-.21-1.334c-.014-.055-.044-.09-.104-.09m1.848-1.6c-.071 0-.126.055-.131.12l-.21 2.873.21 2.783c.005.07.06.12.131.12.07 0 .125-.05.131-.12l.237-2.783-.237-2.873c-.006-.07-.061-.12-.131-.12m.862-.44c-.08 0-.138.06-.144.135l-.195 3.313.195 3.186c.006.077.065.135.144.135.08 0 .139-.058.144-.135l.217-3.186-.217-3.313c-.005-.075-.065-.135-.144-.135m.86-.27c-.092 0-.155.07-.16.155l-.18 3.583.18 3.318c.005.085.068.155.16.155.09 0 .153-.07.16-.155l.2-3.318-.2-3.583c-.007-.085-.07-.155-.16-.155m.882-.145c-.098 0-.171.08-.176.17l-.164 3.728.164 3.418c.005.092.078.17.176.17.096 0 .17-.078.176-.17l.185-3.418-.185-3.728c-.006-.09-.08-.17-.176-.17m.883-.12c-.11 0-.19.09-.194.19l-.15 3.848.15 3.483c.004.1.084.19.194.19.108 0 .189-.09.193-.19l.17-3.483-.17-3.848c-.004-.1-.085-.19-.193-.19m.888-.1c-.12 0-.204.098-.207.205l-.136 3.948.136 3.543c.003.11.088.205.207.205.118 0 .203-.095.207-.205l.15-3.543-.15-3.948c-.004-.107-.09-.205-.207-.205m.897-.063c-.13 0-.218.106-.22.22l-.12 4.01.12 3.588c.002.115.09.22.22.22.128 0 .217-.105.22-.22l.136-3.588-.136-4.01c-.003-.114-.092-.22-.22-.22m.89-.03c-.14 0-.233.115-.234.234l-.107 4.04.107 3.61c.001.12.094.234.234.234.14 0 .232-.114.234-.234l.12-3.61-.12-4.04c-.002-.12-.094-.234-.234-.234m.894-.012c-.15 0-.247.125-.247.25l-.093 4.052.093 3.603c0 .13.097.25.247.25.148 0 .246-.12.247-.25l.104-3.603-.104-4.052c-.001-.125-.099-.25-.247-.25m5.028.96c-.232 0-.449.032-.659.09C12.957 8.582 10.766 6.65 8.206 6.65c-.554 0-1.1.103-1.584.3-.182.074-.23.148-.23.293v10.1c0 .152.122.28.272.294h6.68c1.768 0 3.2-1.43 3.2-3.195S15.112 11.25 13.344 11.25"/></svg>
+      </a>
+      <a href="https://www.mixcloud.com/CrossFeeder/" target="_blank" class="social" title="Mixcloud">
+        <svg viewBox="0 0 24 24"><path d="M6.344 9.5c.058 0 .098.048.098.108l-.003 4.784c0 .06-.04.108-.098.108H5.35c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06 0c.057 0 .097.048.097.108v4.784c0 .06-.04.108-.098.108H8.41c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06 1.25c.058 0 .098.048.098.108v2.284c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108v-2.284c0-.06.04-.108.098-.108h.994zm3.06-1.25c.058 0 .098.048.098.108v4.784c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06.5c.058 0 .098.048.098.108v3.784c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108v-3.784c0-.06.04-.108.098-.108h.994z"/></svg>
+      </a>
+    </div>
+    <div class="copyright">© 2025 CROSSFEEDER AGNEINDELEY BILÉ — TOUS DROITS RÉSERVÉS</div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -331,28 +331,48 @@
   .link:nth-child(5) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.62s both; }
   .link:nth-child(6) { animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.70s both; }
 
-  /* ===== AUDIO VISUALIZER (decorative) ===== */
-  .visualizer {
-    display: flex;
-    justify-content: center;
-    gap: 3px;
+  /* ===== EMBEDDED PLAYER ===== */
+  .embed-player {
+    margin-top: 4px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--bg-card);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+  }
+
+  .embed-player:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 12px 40px rgba(217, 119, 6, 0.08);
+  }
+
+  .embed-player iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+
+  /* ===== MINI PLAYER ===== */
+  .mini-player {
     margin: 36px 0 12px;
-    height: 28px;
-    align-items: flex-end;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     animation: fadeUp 0.5s ease 0.8s both;
   }
 
-  .bar {
-    width: 3px;
-    border-radius: 2px;
-    background: var(--accent);
-    opacity: 0.3;
-    animation: pulse var(--d, 1s) ease-in-out infinite alternate;
+  .mini-player:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 8px 24px rgba(217, 119, 6, 0.08);
   }
 
-  @keyframes pulse {
-    0% { height: var(--h1, 6px); opacity: 0.15; }
-    100% { height: var(--h2, 20px); opacity: 0.4; }
+  .mini-player iframe {
+    display: block;
+    width: 100%;
+    border: 0;
   }
 
   /* ===== FOOTER ===== */
@@ -715,6 +735,11 @@
       <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
 
+    <!-- Mixcloud embedded player -->
+    <div class="embed-player">
+      <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?light=1&feed=%2FCrossFeeder%2Fcrossfeeder-crosscurrent-vol1-house-uk-garage%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+    </div>
+
   </div>
 
   <!-- FOLLOW -->
@@ -767,23 +792,9 @@
 
   </div>
 
-  <!-- VISUALIZER -->
-  <div class="visualizer">
-    <div class="bar" style="--h1:4px;--h2:14px;--d:0.8s"></div>
-    <div class="bar" style="--h1:8px;--h2:22px;--d:0.6s"></div>
-    <div class="bar" style="--h1:5px;--h2:18px;--d:1.1s"></div>
-    <div class="bar" style="--h1:10px;--h2:26px;--d:0.5s"></div>
-    <div class="bar" style="--h1:6px;--h2:20px;--d:0.9s"></div>
-    <div class="bar" style="--h1:12px;--h2:28px;--d:0.45s"></div>
-    <div class="bar" style="--h1:7px;--h2:22px;--d:0.75s"></div>
-    <div class="bar" style="--h1:4px;--h2:16px;--d:1s"></div>
-    <div class="bar" style="--h1:9px;--h2:24px;--d:0.55s"></div>
-    <div class="bar" style="--h1:5px;--h2:12px;--d:0.85s"></div>
-    <div class="bar" style="--h1:11px;--h2:26px;--d:0.65s"></div>
-    <div class="bar" style="--h1:6px;--h2:18px;--d:0.95s"></div>
-    <div class="bar" style="--h1:3px;--h2:14px;--d:1.2s"></div>
-    <div class="bar" style="--h1:8px;--h2:20px;--d:0.7s"></div>
-    <div class="bar" style="--h1:5px;--h2:16px;--d:0.9s"></div>
+  <!-- MINI PLAYER -->
+  <div class="mini-player">
+    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&light=1&feed=%2FCrossFeeder%2Fcrossfeeder-crosscurrent-vol1-house-uk-garage%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
   </div>
 
   <!-- BIO / PRESS -->
@@ -807,7 +818,7 @@
         <svg viewBox="0 0 24 24"><path d="M6.344 9.5c.058 0 .098.048.098.108l-.003 4.784c0 .06-.04.108-.098.108H5.35c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06 0c.057 0 .097.048.097.108v4.784c0 .06-.04.108-.098.108H8.41c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06 1.25c.058 0 .098.048.098.108v2.284c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108v-2.284c0-.06.04-.108.098-.108h.994zm3.06-1.25c.058 0 .098.048.098.108v4.784c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108V9.608c0-.06.04-.108.098-.108h.994zm3.06.5c.058 0 .098.048.098.108v3.784c0 .06-.04.108-.098.108h-.994c-.058 0-.098-.048-.098-.108v-3.784c0-.06.04-.108.098-.108h.994z"/></svg>
       </a>
     </div>
-    <div class="copyright">© 2025 CROSSFEEDER AGNEINDELEY BILÉ — TOUS DROITS RÉSERVÉS</div>
+    <div class="copyright">© 2025 CROSSFEEDER — TOUS DROITS RÉSERVÉS</div>
   </div>
 
 </div>

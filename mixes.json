@@ -25,7 +25,7 @@
       "genres": "UK Bass · Club · Grime",
       "mixcloud": "/CrossFeeder/crossfeeder-crosscurrent-vol2-uk-bass-club-grime/",
       "soundcloud": "",
-      "cover": ""
+      "cover": "covers/crosscurrent-vol2.jpg"
     },
     {
       "id": "crosscurrent-vol1",
@@ -34,7 +34,7 @@
       "genres": "House × UK Garage",
       "mixcloud": "/CrossFeeder/crossfeeder-crosscurrent-vol1-house-uk-garage/",
       "soundcloud": "",
-      "cover": ""
+      "cover": "covers/crosscurrent-vol1.jpg"
     },
     {
       "id": "b3b-house",
@@ -43,7 +43,7 @@
       "genres": "House",
       "mixcloud": "/CrossFeeder/b3b-house-djs-x-josh-monacor-x-soundspirit-x-crossfeeder/",
       "soundcloud": "",
-      "cover": ""
+      "cover": "covers/b3b-house.jpg"
     }
   ]
 }

@@ -644,6 +644,25 @@
 
   /* Extra bottom padding for page content so player doesn't overlap */
   .page { padding-bottom: 90px; }
+  /* ===== DERNIERS MIXS (alimenté par mixes.json) ===== */
+  .mix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .mix-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+    overflow: hidden; color: var(--cream); text-align: left; padding: 0; font: inherit;
+    cursor: pointer; transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .mix-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(217, 119, 6, 0.08); }
+  .mix-card.active { border-color: var(--accent); }
+  .mix-cover { aspect-ratio: 1 / 1; width: 100%; display: block; object-fit: cover; background: radial-gradient(circle at 30% 30%, var(--accent-dark), #0d1b3a 70%); }
+  .mix-cover.fallback { display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.08em; color: var(--cream); padding: 12px; text-align: center; line-height: 1; }
+  .mix-meta { padding: 10px 12px 12px; }
+  .mix-series { font-size: 0.8rem; font-weight: 500; }
+  .mix-genres { font-size: 0.66rem; color: var(--cream-dim); font-weight: 300; margin-top: 2px; }
+  .mix-links { display: flex; gap: 10px; margin-top: 8px; }
+  .mix-links a { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--accent); text-decoration: none; opacity: 0.75; }
+  .mix-links a:hover { opacity: 1; }
+  .mix-card.is-new .mix-series::after { content: 'NOUVEAU'; font-size: 0.55rem; letter-spacing: 0.15em; color: var(--bg); background: var(--accent); border-radius: 4px; padding: 1px 5px; margin-left: 6px; vertical-align: middle; }
 </style>
 </head>
 <body>
@@ -737,9 +756,16 @@
 
     <!-- Mixcloud embedded player -->
     <div class="embed-player">
-      <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?light=1&feed=%2FCrossFeeder%2Fcrossfeeder-crosscurrent-vol1-house-uk-garage%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+      <iframe id="mainMix" width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?light=1&feed=%2FCrossFeeder%2Fcrossfeeder-crosscurrent-vol1-house-uk-garage%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
     </div>
 
+  </div>
+
+
+  <!-- DERNIERS MIXS : section générée depuis mixes.json (mise à jour par l'agent CrossFeeder) -->
+  <div id="mixesSection" hidden>
+    <div class="divider"><span>DERNIERS MIXS</span></div>
+    <div class="mix-grid" id="mixGrid"></div>
   </div>
 
   <!-- FOLLOW -->
@@ -794,7 +820,7 @@
 
   <!-- MINI PLAYER -->
   <div class="mini-player">
-    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&light=1&feed=%2FCrossFeeder%2Fcrossfeeder-crosscurrent-vol1-house-uk-garage%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+    <iframe id="miniMix" width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&light=1&feed=%2FCrossFeeder%2Fcrossfeeder-crosscurrent-vol1-house-uk-garage%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
   </div>
 
   <!-- BIO / PRESS -->
@@ -941,5 +967,40 @@
 })();
 </script>
 
+
+<script>
+/* Derniers mixs : lit mixes.json (le plus récent en premier), met le lecteur sur le dernier mix et affiche la grille. */
+(function () {
+  const W = 'https://player-widget.mixcloud.com/widget/iframe/?';
+  const feed = k => encodeURIComponent(k);
+  const main = document.getElementById('mainMix'), mini = document.getElementById('miniMix');
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function play(m, card, scroll) {
+    if (main) main.src = W + 'light=1&feed=' + feed(m.mixcloud);
+    if (mini) mini.src = W + 'hide_cover=1&mini=1&light=1&feed=' + feed(m.mixcloud);
+    document.querySelectorAll('.mix-card').forEach(c => c.classList.toggle('active', c === card));
+    if (scroll && main) main.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  fetch('mixes.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(d => {
+    if (!d || !d.mixes || !d.mixes.length) return;
+    const grid = document.getElementById('mixGrid');
+    d.mixes.forEach((m, i) => {
+      const card = document.createElement('div');
+      card.className = 'mix-card' + (i === 0 ? ' is-new active' : '');
+      card.setAttribute('role', 'button'); card.tabIndex = 0; card.title = m.title;
+      const cover = m.cover ? '<img class="mix-cover" loading="lazy" src="' + esc(m.cover) + '" alt="' + esc(m.title) + '">'
+                            : '<div class="mix-cover fallback">' + esc(m.series) + '</div>';
+      const sc = m.soundcloud ? '<a href="' + esc(m.soundcloud) + '" target="_blank" rel="noopener">SOUNDCLOUD</a>' : '';
+      card.innerHTML = cover + '<div class="mix-meta"><div class="mix-series">' + esc(m.series) + '</div><div class="mix-genres">' + esc(m.genres) +
+        '</div><div class="mix-links"><a href="https://www.mixcloud.com' + esc(m.mixcloud) + '" target="_blank" rel="noopener">MIXCLOUD</a>' + sc + '</div></div>';
+      card.addEventListener('click', e => { if (!e.target.closest('a')) play(m, card, true); });
+      card.addEventListener('keydown', e => { if (e.key === 'Enter') play(m, card, true); });
+      grid.appendChild(card);
+    });
+    play(d.mixes[0], grid.firstChild, false);
+    document.getElementById('mixesSection').hidden = false;
+  }).catch(() => {});
+})();
+</script>
 </body>
 </html>

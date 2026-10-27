@@ -1,6 +1,15 @@
 {
   "mixes": [
     {
+      "id": "crossover-session-2",
+      "title": "CrossFeeder b2b ChillBrax — CrossOver Session #2 | Nu-Disco × House DJ Set",
+      "series": "CrossOver Session #2",
+      "genres": "Nu-Disco × House",
+      "mixcloud": "/CrossFeeder/crossfeeder-b2b-chillbrax-crossover-session-2-nu-disco-house-dj-set/",
+      "soundcloud": "",
+      "cover": "covers/crossover-session-2.jpg"
+    },
+    {
       "id": "crossover-session-1",
       "title": "CrossFeeder b2b ChillBrax — CrossOver Session #1 | House DJ Set",
       "series": "CrossOver Session #1",

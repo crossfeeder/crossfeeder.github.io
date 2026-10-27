@@ -124,6 +124,22 @@
   .foot { border-top: 1px solid var(--line); padding-top: 20px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; font-family: var(--mono); font-size: 13px; color: var(--muted); }
   .foot nav { display: flex; flex-wrap: wrap; gap: 24px; }
 
+  /* Vinyle qui tourne */
+  .disc-wrap { position: relative; width: 100%; aspect-ratio: 1 / 1; }
+  .disc { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: #000; box-shadow: 0 18px 50px rgba(0,0,0,.55), 0 0 0 6px #0B0908; }
+  .disc img { display: block; width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
+  .disc::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: repeating-radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0 3px, rgba(0,0,0,.16) 3px 4px); }
+  .disc::after { content: ''; position: absolute; left: 50%; top: 50%; width: 9%; height: 9%; transform: translate(-50%, -50%); border-radius: 50%; background: var(--card); box-shadow: 0 0 0 3px rgba(0,0,0,.6), 0 0 0 14px rgba(0,0,0,.25); }
+  .disc-shine { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: conic-gradient(from 200deg, rgba(255,255,255,0) 0deg, rgba(255,255,255,.12) 30deg, rgba(255,255,255,0) 70deg, rgba(255,255,255,0) 180deg, rgba(255,255,255,.08) 210deg, rgba(255,255,255,0) 250deg); }
+  .disc.spin { animation: drop .5s cubic-bezier(.2,.8,.2,1) both, spin 8s linear .5s infinite; }
+  .now:hover .disc.spin { animation-play-state: running, paused; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes drop { from { transform: scale(.88) rotate(-20deg); opacity: .4; } to { transform: none; opacity: 1; } }
+
+  /* Apparition au défilement (seulement si JS actif) */
+  .js-reveal .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+  .js-reveal .reveal.in { opacity: 1; transform: none; }
+
   @media (max-width: 600px) {
     .mix { gap: 14px; padding: 12px 8px; }
     .mix .num { display: none; }
@@ -132,7 +148,8 @@
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .l, .la, .lb, .eq span, .line { animation: none !important; }
+    .l, .la, .lb, .eq span, .line, .disc.spin { animation: none !important; }
+    .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
   }
 </style>
 </head>
@@ -179,14 +196,17 @@
 
   <section id="face-a" class="sec">
     <div class="wrap sec-in">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <h2 class="h2">Face A — Les mixs</h2>
         <span class="hint" id="mixCount">Cliquer pour écouter</span>
       </div>
       <div class="faceA">
         <ol class="list" id="mixList"></ol>
-        <aside class="now" id="now" aria-label="Mix sélectionné" aria-live="polite">
-          <img id="nowCover" src="covers/crossover-session-1.jpg" alt="">
+         <aside class="now reveal" id="now" aria-label="Mix sélectionné" aria-live="polite">
+          <div class="disc-wrap">
+            <div class="disc spin" id="nowDisc"><img id="nowCover" src="covers/crossover-session-1.jpg" alt=""></div>
+            <div class="disc-shine" aria-hidden="true"></div>
+          </div>
           <div>
             <div class="lbl" id="nowLbl">En écoute</div>
             <div class="s" id="nowSeries">CrossFeeder</div>
@@ -202,15 +222,14 @@
 
   <section id="face-b" class="sec faceB">
     <div class="wrap sec-in">
-      <div>
+      <div class="reveal">
         <h2 class="h2">Face B — <span style="color: var(--blue)">Notes</span></h2>
-        <p class="lead">Ici, ce sont les morceaux qui parlent. Des sets construits comme des pochettes qu'on retourne : une face pour danser, une pour écouter.</p>
       </div>
       <div class="notes">
-        <p><span class="n">01 —</span> Musicien formé au conservatoire, aux platines depuis 2014, d'abord dans les clubs underground de Wuhan.</p>
-        <p><span class="n">02 —</span> Le mashup par stems pour faire se rencontrer une voix et une rythmique qui n'auraient jamais dû se croiser.</p>
-        <p><span class="n">03 —</span> Des influences larges : Kaytranada, Jungle, Kiefer, Justice, mais aussi le jazz et l'électro.</p>
-        <p><span class="n">04 —</span> Sur platines comme sur contrôleur, en solo ou en b2b avec ChillBrax.</p>
+        <p class="reveal" style="--d: 0.00s"><span class="n">01 —</span> Musicien formé au conservatoire, aux platines depuis 2014, d'abord dans les clubs underground de Wuhan.</p>
+        <p class="reveal" style="--d: 0.12s"><span class="n">02 —</span> Le mashup par stems pour faire se rencontrer une voix et une rythmique qui n'auraient jamais dû se croiser.</p>
+        <p class="reveal" style="--d: 0.24s"><span class="n">03 —</span> Des influences larges : Kaytranada, Jungle, Kiefer, Justice, mais aussi le jazz et l'électro.</p>
+        <p class="reveal" style="--d: 0.36s"><span class="n">04 —</span> Sur platines comme sur contrôleur, en solo ou en b2b avec ChillBrax.</p>
       </div>
     </div>
   </section>
@@ -218,7 +237,7 @@
 
 <footer id="contact" class="sec">
   <div class="wrap contact-in">
-    <div class="contact-row">
+    <div class="contact-row reveal">
       <p class="h2" style="font-size: clamp(40px, 6vw, 72px); max-width: 720px">Booking, b2b, collabs</p>
       <a class="cta" href="mailto:hello@djcrossfeeder.com">hello@djcrossfeeder.com</a>
     </div>
@@ -234,6 +253,12 @@
 </footer>
 
 <script>
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!REDUCED && 'IntersectionObserver' in window) document.documentElement.classList.add('js-reveal');
+const revealIO = ('IntersectionObserver' in window) ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); } }), { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }) : null;
+const reveal = el => { if (revealIO) revealIO.observe(el); else el.classList.add('in'); };
+document.querySelectorAll('.reveal').forEach(reveal);
+
 /* Crossfader : teinte la photo et les accents, de l'ambre au bleu */
 (function () {
   const A = [227, 155, 61], B1 = [76, 141, 255], B2 = [111, 163, 255];
@@ -241,6 +266,22 @@
   const root = document.documentElement, xf = document.getElementById('xf');
   const apply = () => { const t = xf.value / 100; root.style.setProperty('--tint', mix(A, B1, t)); root.style.setProperty('--accent', mix(A, B2, t)); };
   xf.addEventListener('input', apply); apply();
+  /* Démo automatique : un aller-retour ambre → bleu → ambre à l'arrivée, interrompu dès que le visiteur touche le fader */
+  if (!REDUCED) {
+    let stop = false;
+    ['pointerdown', 'keydown', 'touchstart'].forEach(ev => xf.addEventListener(ev, () => { stop = true; }, { once: true }));
+    setTimeout(() => {
+      const t0 = performance.now(), D = 4200;
+      const step = now => {
+        if (stop) return;
+        const k = Math.min((now - t0) / D, 1);
+        xf.value = Math.round(100 * (1 - Math.cos(k * 2 * Math.PI)) / 2);
+        apply();
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, 1800);
+  }
 })();
 
 /* Face A : liste des mixs lue dans mixes.json (mise à jour par l'agent CrossFeeder) */
@@ -251,6 +292,7 @@
   function select(m, btn, num) {
     list.querySelectorAll('.mix').forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
     $('nowCover').src = m.cover || 'photos/studio.jpg';
+    const disc = $('nowDisc'); disc.classList.remove('spin'); void disc.offsetWidth; disc.classList.add('spin');
     $('nowCover').alt = 'Pochette de ' + m.series;
     $('nowLbl').textContent = 'En écoute · ' + num;
     $('nowSeries').textContent = m.series;
@@ -282,6 +324,7 @@
         if (window.innerWidth < 900) $('now').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
       });
       li.appendChild(b); list.appendChild(li);
+      li.classList.add('reveal'); li.style.setProperty('--d', (i * 0.06).toFixed(2) + 's'); reveal(li);
       if (i === 0) select(m, b, num);
     });
   }).catch(() => {
